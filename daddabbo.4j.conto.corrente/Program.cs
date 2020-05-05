@@ -8,6 +8,7 @@ namespace daddabbo._4j.conto.corrente
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Progetto Conto Corrente");
@@ -15,120 +16,186 @@ namespace daddabbo._4j.conto.corrente
 
             /***CREAZIONE BANCA***/
 
-            Console.Write("\nInserire nome banca: ");
+            Console.Write("\nNome Banca: ");
             string nBanca = Console.ReadLine();
 
-            Console.Write("\nInserire indirizzo banca: ");
+            Console.Write("\nIndirizzo" +
+                ": ");
             string iBanca = Console.ReadLine();
 
             Banca banca = new Banca(nBanca, iBanca); // Banca
 
             /***INSERIMENTO DATI***/
-
-            int selezione = StampaMenu();
-            while(selezione != 99)
-            { 
+            string selezione = StampaMenu();
+            while (selezione != "99")
+            {
                 switch (selezione)
                 {
-                    case 1:
-                        ModificaBanca(banca);
+                    case "1":
+                        InterfacciaBanca(banca);
                         break;
-                    case 2:
-                        InserisciIntestatario(banca);
+                    case "2":
+                        InterfacciaUtente(banca);
                         break;
-                    case 3:
-                        ModificaIntestatario(banca);
-                        break;
-                    case 4:
-                        StampaMovimenti(banca);
-                        break;
-                    case 5:
-                        EseguiBonifico(banca);
-                        break;
-                    case 6:
-                        EseguiVersamento(banca);
-                        break;
-                    case 7:
-                        EseguiPrelievo(banca);
-                        break;
-                    case 8:
-                        Console.WriteLine("\n------------------------------");
-                        Console.WriteLine("\nElenco clienti della banca " + banca.Nome);
-                        foreach(ContoCorrente _conto in banca.conti)
-                        {
-                            Console.WriteLine(_conto.Intestatario.Nome + " IBAN: " + _conto.Iban);
-                        }
-                        Console.WriteLine("------------------------------\n");
-                        break;
-                    case 9:
-                        Console.WriteLine("Nome banca: " + banca.Nome + "\nIndirizzo banca: " + banca.Indirizzo);
-                        break;
-                    case 10:
-                        Console.Write("Inserire IBAN del conto da verficare: ");
-                        string ibanVerficare = Console.ReadLine();
-                        bool ibanTrovato = false;
-                        foreach (ContoCorrente c in banca.conti)
-                        {
-                            if(c.Iban == ibanVerficare)
-                            {
-                                ibanTrovato = true;
-                                Console.WriteLine("\n------------------------------\n");
-                                Console.WriteLine("Il saldo del conto " + ibanVerficare + " è di: " + c.Saldo);
-                                Console.WriteLine("\n------------------------------\n");
-                            }
-                        }
-                        if (ibanTrovato == false)
-                        {
-                            Console.WriteLine("IBAN non trovato");
-                        }
-                        break;
-                    case 11:
-                        AddContoAggiuntivo(banca);
-                        break;
+                    }
+                    selezione = StampaMenu();
                 }
-                selezione = StampaMenu();
+                Console.WriteLine("Chiudi il prgramma premendo qualsiasi tasto");
+                Console.ReadKey();
             }
-            Console.WriteLine("Per terminare il programma premenre un qualunque tasto...");      
-            Console.ReadKey();
-        }
 
-        public static int StampaMenu()
+        public static string StampaMenu()
         {
-            int selezione = 0;
+            string selezione = "";
 
             do
             {
                 try
                 {
-                    Console.WriteLine("\n------------------------------");
-                    Console.WriteLine("1 - Modifica info banca");
-                    Console.WriteLine("2 - Inserisci intestatario");
-                    Console.WriteLine("3 - Modififca intestatario");
-                    Console.WriteLine("4 - Stampa movimenti");
-                    Console.WriteLine("5 - Effettua bonifico");
-                    Console.WriteLine("6 - Effettua versamento");
-                    Console.WriteLine("7 - Effettua prelievo");
-                    Console.WriteLine("8 - Stampa clienti");
-                    Console.WriteLine("9 - Stampa info banca");
-                    Console.WriteLine("10 - Stampa saldo conto");
-                    Console.WriteLine("11 - Aggiungi nuovo conto a cliente");
-                    Console.WriteLine("\n99 - Esci");
-                    Console.WriteLine("\n------------------------------\n");
-                    Console.Write("Selezione > ");
-                    selezione = int.Parse(Console.ReadLine());
+                    Console.WriteLine("------------------------------------------------------------------------------------");
+                    Console.WriteLine("1-Interfaccia banca                                             2-Interfaccia Utente");
+                    Console.WriteLine("                                    99-Esci                                         ");
+                    Console.Write("Inserisci> ");
+                    selezione = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("\n");
                 }
                 catch
                 {
                     Console.WriteLine("Errore di inserimento");
-                    selezione = 0;
+                    selezione = "0";
                 }
-            } while (selezione != 1 && selezione != 2 && selezione != 3 && selezione != 4 && selezione != 5 && selezione != 6 && selezione != 7 && selezione != 8 && selezione != 9 && selezione != 10 && selezione != 11 && selezione != 99);
+            } while (selezione != "1" && selezione != "2" && selezione != "99");
 
             return selezione;
         }
 
-        public static void ModificaBanca(Banca banca)
+        public static string InterfacciaBanca(Banca banca)
+        {
+            string selezione = "0";
+            do
+            {
+                try
+                {
+                    Console.WriteLine("-------------------------------------------------");
+                    Console.WriteLine("INTERFACCIA BANCA");
+                    Console.WriteLine("1a- Modifica banca");
+                    Console.WriteLine("2a- Crea Utente");
+                    Console.WriteLine("3a- Stampa Informazioni banca");
+                    Console.WriteLine("4a- Stampa tutti i clienti\n\n");
+                    Console.WriteLine("2- Interfaccia Utente                      99- Esci");
+                    Console.Write("Inserisci> ");
+                    selezione = Convert.ToString(Console.ReadLine());
+                    Console.WriteLine("\n");
+                }
+                catch
+                {
+                    Console.WriteLine("Errore di inserimento");
+                    selezione = "0";
+                }
+            } while (selezione != "1a" && selezione != "2a" && selezione != "3a" && selezione != "4a" && selezione != "2" && selezione != "99");
+
+            switch (selezione)
+            {
+                case "1a":
+                    ModificaInfoBanca(banca);
+                    break;
+                case "2a":
+                    NuovoUtente(banca);
+                    break;
+                case "3a":
+                    Console.WriteLine("Nome banca: " + banca.Nome + "\nIndirizzo banca: " + banca.Indirizzo);
+                    break;
+                case "4a":
+                    Console.WriteLine("\n------------------------------");
+                    Console.WriteLine("\nElenco clienti della banca " + banca.Nome);
+                    foreach (ContoCorrente _conto in banca.conti)
+                    {
+                        Console.WriteLine(_conto.Intestatario.Nome + " IBAN: " + _conto.Iban);
+                    }
+                    Console.WriteLine("------------------------------\n");
+                    break;
+                case "2":
+                    InterfacciaUtente(banca);
+                    break;
+                case "99":
+                    break;
+            }
+            return selezione;
+        }
+
+        public static string InterfacciaUtente(Banca banca)
+        {
+            string selezione = "0";
+            do
+            {
+                try
+                {
+                    Console.WriteLine("-------------------------------------------------");
+                    Console.WriteLine("INTERFACCIA UTENTE   ");
+                    Console.WriteLine("1b- Effettua bonifico");
+                    Console.WriteLine("2b- Effettua versamento");
+                    Console.WriteLine("3b- Effettua prelievo");
+                    Console.WriteLine("4b- Visualizza movimenti");
+                    Console.WriteLine("5b- Stampa saldo conto");
+                    Console.WriteLine("6b- Aggiungi nuovo conto\n\n");
+                    Console.WriteLine("1- Interfaccia Banca                      99- Esci");
+                    Console.Write("Inserisci> ");
+                    selezione = Convert.ToString(Console.ReadLine());
+                    Console.WriteLine("\n");
+                }
+                catch
+                {
+                    Console.WriteLine("Errore di inserimento");
+                    selezione = "0";
+                }
+            } while (selezione != "1b" && selezione != "2b" && selezione != "3b" && selezione != "4b" && selezione != "5b" && selezione != "6b" && selezione != "1" && selezione != "99");
+
+            switch (selezione)
+            {
+                case "1b":
+                    EffettuaBonifico(banca);
+                    break;
+                case "2b":
+                    EffettuaVersamento(banca);
+                    break;
+                case "3b":
+                    EffettuaPrelievo(banca);
+                    break;
+                case "4b":
+                    StampaMovimenti(banca);
+                    break;
+                case "5b":
+                    Console.Write("Inserire IBAN del conto da verficare: ");
+                    string ibanVerficare = Console.ReadLine();
+                    bool ibanTrovato = false;
+                    foreach (ContoCorrente c in banca.conti)
+                    {
+                        if (c.Iban == ibanVerficare)
+                        {
+                            ibanTrovato = true;
+                            Console.WriteLine("\n------------------------------\n");
+                            Console.WriteLine("Il saldo del conto " + ibanVerficare + " è di: " + c.Saldo);
+                            Console.WriteLine("\n------------------------------\n");
+                        }
+                    }
+                    if (ibanTrovato == false)
+                    {
+                        Console.WriteLine("IBAN non trovato");
+                    }
+                    break;
+                case "6b":
+                    AddContoAggiuntivo(banca);
+                    break;
+                case "1":
+                    InterfacciaBanca(banca);
+                    break;
+                case "99":
+                    break;
+            }
+            return selezione;
+        }
+
+        public static void ModificaInfoBanca(Banca banca)
         {
             int selezione = 0;
 
@@ -168,7 +235,7 @@ namespace daddabbo._4j.conto.corrente
             }
         }
 
-        public static void InserisciIntestatario(Banca banca)
+        public static void NuovoUtente(Banca banca)
         {
             Random iban_casuale = new Random();
             string nome, cf, telefono, mail, indirizzo;
@@ -239,76 +306,6 @@ namespace daddabbo._4j.conto.corrente
                 
             } while (risp != "si" && risp != "sì" && risp != "no");
            
-        }
-
-        public static void ModificaIntestatario(Banca banca)
-        {
-            string iban = "", nome, cf, telefono, mail, indirizzo;
-            DateTime dataNascita = new DateTime();
-            Intestatario intestatario = new Intestatario("", "", "", "", "", DateTime.Now);
-
-            Console.WriteLine("Inserisci IBAN del cliente da modificare: ");
-            string ibanIntestatario = Console.ReadLine();
-
-            foreach(ContoCorrente i in banca.conti)
-            {
-                if (i.Iban == ibanIntestatario)
-                {
-                    iban = i.Iban;
-                    intestatario = i.Intestatario;
-                }
-            }
-
-            if(iban == "")
-            {
-                Console.WriteLine("Il cliente non è presente");
-            }
-            else
-            {
-                Console.WriteLine("Inserire dati cliente...\n");
-                Console.Write("\nInserisci nome: ");
-                nome = Console.ReadLine();
-
-                Console.Write("\nInserisci codice fiscale: ");
-                cf = Console.ReadLine();
-
-                Console.Write("\nInserisci numero di telefono: ");
-                telefono = Console.ReadLine();
-
-                Console.WriteLine("\nInserisci mail: ");
-                mail = Console.ReadLine();
-
-                Console.Write("\nInserisci indirizzo: ");
-                indirizzo = Console.ReadLine();
-
-                bool errore = true;
-                while (errore == true)
-                {
-                    try
-                    {
-                        string[] data;
-
-                        Console.Write("\nInserisci data di nascita (anno/mese/giorno): ");
-                        data = Console.ReadLine().ToString().Split('/');
-
-                        dataNascita = new DateTime(int.Parse(data[0]), int.Parse(data[1]), int.Parse(data[2]));
-                        errore = false;
-                    }
-                    catch
-                    {
-                        errore = true;
-                        Console.WriteLine("Errore nell'inserimento dei dati");
-                    }
-                }
-
-                intestatario.Nome = nome;
-                intestatario.Cf = cf;
-                intestatario.Indirizzo = indirizzo;
-                intestatario.Mail = mail;
-                intestatario.Telefono = telefono;
-                intestatario.DataNascita = dataNascita;
-            }
-            Console.WriteLine("Intestatario modificato correttamente");
         }
 
         public static void StampaMovimenti(Banca banca)
@@ -441,7 +438,7 @@ namespace daddabbo._4j.conto.corrente
             }
         }
 
-        public static void EseguiBonifico(Banca banca)
+        public static void EffettuaBonifico(Banca banca)
         {
             bool trovato = false;
             Console.Write("\nInserire IBAN mittente: ");
@@ -487,7 +484,7 @@ namespace daddabbo._4j.conto.corrente
 
                     if(risp == "si" || risp == "sì")
                     {
-                        InserisciIntestatario(banca);
+                        NuovoUtente(banca);
                     }
                 }
             }
@@ -499,13 +496,13 @@ namespace daddabbo._4j.conto.corrente
 
                 if (risp == "si" || risp == "sì")
                 {
-                    InserisciIntestatario(banca);
+                    NuovoUtente(banca);
                 }
             }
 
         }
 
-        public static void EseguiVersamento(Banca banca)
+        public static void EffettuaVersamento(Banca banca)
         {
             Console.WriteLine("Inserire IBAN conto: ");
             string iban = Console.ReadLine();
@@ -519,7 +516,7 @@ namespace daddabbo._4j.conto.corrente
             Console.WriteLine("Versamento di " + importo + " euro effettuato");
         }
 
-        public static void EseguiPrelievo(Banca banca)
+        public static void EffettuaPrelievo(Banca banca)
         {
             Console.WriteLine("Inserire IBAN conto: ");
             string iban = Console.ReadLine();
@@ -565,7 +562,7 @@ namespace daddabbo._4j.conto.corrente
                 {
                     Console.WriteLine("Vuoi aggiungere un conto online? (si/no)");
                     risposta = Console.ReadLine().ToLower();
-                    if (risposta != "si" && risposta != "sì" && risposta != "no")
+                    if (risposta != "si" && risposta != "no")
                     {
                         Console.WriteLine("Errore nell'inserimento dati");
                     }
@@ -593,11 +590,11 @@ namespace daddabbo._4j.conto.corrente
                 {
                     Console.WriteLine("Cliente non trovato, vuoi inserirlo? (si/no)");
                     risposta = Console.ReadLine().ToLower();
-                } while (risposta != "si" && risposta != "sì" || risposta != "no");
+                } while (risposta != "si" && risposta != "no");
                 
-                if(risposta != "no")
+                if(risposta == "si")
                 {
-                    InserisciIntestatario(banca);
+                    NuovoUtente(banca);
                 }
             }
         }
